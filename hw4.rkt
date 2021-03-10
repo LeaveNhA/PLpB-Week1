@@ -88,5 +88,11 @@
                           (set! pos (remainder (+ pos 1) n))
                           new-ans))))))))))
 
-;; TODO: Yeah, writing macro in Racket is not fluent like in the Clojure. I miss Clojure.
-;; (define-syntax while-less)
+(define-syntax while-less
+  (syntax-rules (do)
+    [(while expression-1 do expression-2)
+     ((Y (lambda (f)
+           (lambda (_)
+             (if (>= expression-2 expression-1)
+                 #t
+                 (f null))))) null)]))
